@@ -21,19 +21,25 @@ ApplicationWindow{
         }
 
 
-        RowLayout{
+        Item{
             Layout.fillWidth: true
             Layout.fillHeight: true
-            
-            // Sidebar
-            Sidebar{
-                Layout.fillHeight: true                
-            }
-            
-            // Movie List View
-            MovieListView{
-                Layout.fillWidth: true
-                Layout.fillHeight: true      
+
+            RowLayout{
+                anchors.fill: parent
+                anchors.leftMargin: 200
+                anchors.rightMargin: 200
+                
+                // Sidebar
+                Sidebar{
+                    Layout.fillHeight: true                
+                }
+                
+                // Movie List View
+                MovieListView{
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true      
+                }
             }
         }
     }
