@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
+import QtQuick.Controls.Material
 import "custom_components"
 
 Item{ // Sidebar
@@ -23,22 +25,9 @@ Item{ // Sidebar
                 icon: "../../resources/search_icon.svg"
             }
 
-            IconTextField{
+            ComboBox{
                 Layout.fillWidth: true
-                placeholderText: "Phone"
-                icon: "../../resources/phone_icon.svg"
-            }
-
-            IconTextField{
-                Layout.fillWidth: true
-                placeholderText: "Address"
-                icon: "../../resources/address_icon.svg"
-            }
-
-            IconTextField{
-                Layout.fillWidth: true
-                placeholderText: "Name"
-                icon: "../../resources/name_icon.svg"
+                model: ["Popularity Descending", "Popularity Ascending", "Rating Descending", "Rating Ascending", "Release Date Descending", "Release Date Ascending", "Title (A-Z)", "Title (Z-A)"]
             }
         }
 
