@@ -20,13 +20,15 @@ Item{ // Sidebar
                 anchors.top: parent.top
                 anchors.margins: 10
 
-                TitleText{text: "Search and Sorting"}
+                SubtitleText{text: "Search"}
 
                 IconTextField{
                     Layout.fillWidth: true
                     placeholderText: "Search..."
                     icon: "../../resources/search_icon.svg"
                 }
+
+                SubtitleText{text: "Sorting"}
 
                 ComboBox{
                     Layout.fillWidth: true
