@@ -49,12 +49,11 @@ Item{ // Sidebar
             
                 TitleText{text: "Genres"}
 
-                TextButton{text: "Action"; color: "black"; font.bold: false}
-                TextButton{text: "Adventure"; color: "black"; font.bold: false}
-                TextButton{text: "Animation"; color: "black"; font.bold: false}
-                TextButton{text: "Comedy"; color: "black"; font.bold: false}
-                TextButton{text: "Drama"; color: "black"; font.bold: false}
-                TextButton{text: "Fantasy"; color: "black"; font.bold: false}
+                Repeater{
+                    model: ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy"]
+
+                    TextButton{text: modelData; color: "black"; font.bold: false; font.pixelSize: 16}
+                }
             }
         }
 
