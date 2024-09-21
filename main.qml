@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Controls.Material
+import "qml_components"
 
 ApplicationWindow{
     visible: true
@@ -14,42 +15,25 @@ ApplicationWindow{
     ColumnLayout{
         anchors.fill: parent
 
-        Rectangle{  // Header
-            color: "#032541"
+        // Header
+        Navbar{
             Layout.fillWidth: true
-            height: 64
-
-            Text{
-                text: "Navbar..."
-                color: "white"
-                font.pixelSize: 30
-            }
         }
+
 
         RowLayout{
             Layout.fillWidth: true
             Layout.fillHeight: true
             
-            Rectangle{ // Sidebar
-                color: "gray"
-                Layout.fillHeight: true
-                width: 258
-
-                Text{
-                    text: "Sidebar"
-                    font.pixelSize: 30
-                }
+            // Sidebar
+            Sidebar{
+                Layout.fillHeight: true                
             }
             
-            Rectangle{ //Browser
-                color: "gray"
-                Layout.fillHeight: true
+            // Movie List View
+            MovieListView{
                 Layout.fillWidth: true
-
-                Text{
-                    text: "Browser"
-                    font.pixelSize: 30
-                }
+                Layout.fillHeight: true      
             }
         }
     }
