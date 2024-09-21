@@ -1,7 +1,6 @@
 import QtQuick
 
-Rectangle{ // Sidebar
-    color: "gray"
+Item{ // Sidebar
     width: 258
 
     Text{
