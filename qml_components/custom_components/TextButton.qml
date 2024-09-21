@@ -3,7 +3,7 @@ import QtQuick
 Text{
     text: "Text button"
     font.bold: true
-    font.pixelSize: 20
+    font.pixelSize: 18
     color: "white"
 
     MouseArea{
