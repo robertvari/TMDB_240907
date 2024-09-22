@@ -4,6 +4,12 @@ import QtQuick.Layouts
 
 
 Item{
+    id: root
+
+    property string title: "Movie Title"
+    property string release_date: "Date"
+    property int popularity: 100
+    property var poster: Resources.get("poster.webp")
 
     RoundedBox{
         id: source_rect
@@ -12,19 +18,28 @@ Item{
 
         Image{ // Poster
             id: poster
-            source: Resources.get("poster.webp")
+            source: root.poster
             sourceSize: Qt.size(source_rect.width, source_rect.height)
 
             Rectangle{
                 id: popularity_progress
                 width: 60
                 height: width
-                color: "lightBlue"
+                color: "black"
                 radius: width
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: -20
                 anchors.left: parent.left
                 anchors.leftMargin: 10
+
+                Text{
+                    anchors.verticalCenter: popularity_progress.verticalCenter
+                    anchors.horizontalCenter: popularity_progress.horizontalCenter
+                    text: root.popularity
+                    font.pixelSize: 20
+                    font.bold: true
+                    color: "white"
+                }
             }
         }
 
@@ -41,13 +56,13 @@ Item{
                 anchors.fill: parent
 
                 SubtitleText{
-                    text: "Saving Bikini Bottom: The Sandy Cheeks Movie"
+                    text: root.title
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     Layout.fillWidth: true
                 }
 
                 Text{
-                    text: "Jul 25, 2024"
+                    text: root.release_date
                 }
             }
         }

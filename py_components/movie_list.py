@@ -1,4 +1,4 @@
-from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt, QUrl
 import tmdbsimple as tmdb
 
 tmdb.API_KEY = "83cbec0139273280b9a3f8ebc9e35ca9"
