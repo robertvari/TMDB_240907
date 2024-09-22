@@ -1,10 +1,11 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls.Basic
 
 TextField{
     property string icon
     leftPadding: 25
     font.pixelSize: 16
+    color: "black"
 
     background: Rectangle{
         radius: 10
@@ -15,7 +16,7 @@ TextField{
         source: parent.icon
         sourceSize: Qt.size(20, 20)
         opacity: 0.3
-        y: 2
+        y: 6
         x: 3
     }
 }
