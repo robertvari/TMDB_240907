@@ -5,7 +5,7 @@ Item{
     GridView{
         id: grid_view
         anchors.fill: parent
-        model: 10
+        model: MovieList
         cellWidth: 184
         cellHeight: 386
         clip: true
