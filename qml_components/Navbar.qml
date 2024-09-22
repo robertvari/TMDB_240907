@@ -13,7 +13,7 @@ Rectangle{  // Header
         anchors.rightMargin: 30
 
         Image{
-            source: "../resources/logo.svg"
+            source: Resources.get("logo.svg")
             MouseArea{
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor

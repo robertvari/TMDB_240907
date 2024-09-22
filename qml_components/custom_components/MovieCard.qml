@@ -12,7 +12,7 @@ Item{
 
         Image{ // Poster
             id: poster
-            source: "../../resources/poster.webp"
+            source: Resources.get("poster.webp")
             sourceSize: Qt.size(source_rect.width, source_rect.height)
 
             Rectangle{

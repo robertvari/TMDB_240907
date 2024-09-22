@@ -25,7 +25,7 @@ Item{ // Sidebar
                 IconTextField{
                     Layout.fillWidth: true
                     placeholderText: "Search..."
-                    icon: "../../resources/search_icon.svg"
+                    icon: Resources.get("search_icon.svg")
                 }
 
                 SubtitleText{text: "Sorting"}
