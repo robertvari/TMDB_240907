@@ -1,4 +1,5 @@
 import QtQuick
+import "custom_components"
 
 Item{
     GridView{
@@ -9,11 +10,9 @@ Item{
         cellHeight: 386
         clip: true
 
-        delegate: Rectangle{
-            color: "gray"
-            radius: 10
-            width: grid_view.cellWidth - 5
-            height: grid_view.cellHeight -5
+        delegate: MovieCard{
+            width: grid_view.cellWidth - 10
+            height: grid_view.cellHeight - 10
         }
     }
 }
