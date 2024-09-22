@@ -21,10 +21,10 @@ Rectangle{  // Header
             }
         }
 
-        TextButton{text: "Movies"}
-        TextButton{text: "TV Shows"}
-        TextButton{text: "People"}
-        TextButton{text: "More"}
+        TextButton{text: "Movies"; onClicked: main_layout.state = "movie-list"}
+        TextButton{text: "TV Shows"; onClicked: main_layout.state = "tvshows-list"}
+        TextButton{text: "People"; onClicked: main_layout.state = "people-list"}
+        TextButton{text: "More"; onClicked: main_layout.state = "more-view"}
 
         Item{Layout.fillWidth: true}
 
