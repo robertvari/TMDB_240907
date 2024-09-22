@@ -62,4 +62,11 @@ Item{
         color: "#e3e3e3"
         source: source_rect
     }
+
+    MouseArea{
+        anchors.fill: parent
+
+        cursorShape: Qt.PointingHandCursor
+        onClicked: main_layout.state = "movie-details"
+    }
 }

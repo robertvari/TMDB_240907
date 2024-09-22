@@ -13,15 +13,39 @@ ApplicationWindow{
     Material.accent: Material.LightBlue
 
     ColumnLayout{
+        id: main_layout
         anchors.fill: parent
+
+        state: "movie-list"
+        states: [
+            State{
+                name: "movie-details"
+                PropertyChanges{
+                    target: movie_details_view
+                    visible: true
+                }
+
+                PropertyChanges{
+                    target: movie_list_view
+                    visible: false
+                }
+            }
+        ]
 
         // Header
         Navbar{
             Layout.fillWidth: true
         }
 
+        MovieDetailsView{
+            id: movie_details_view
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            visible: false
+        }
 
-        Item{
+        Item{  // movie list view
+            id: movie_list_view
             Layout.fillWidth: true
             Layout.fillHeight: true
 

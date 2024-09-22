@@ -14,6 +14,11 @@ Rectangle{  // Header
 
         Image{
             source: "../resources/logo.svg"
+            MouseArea{
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: main_layout.state = "movie-list"
+            }
         }
 
         TextButton{text: "Movies"}
