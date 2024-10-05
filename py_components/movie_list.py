@@ -75,9 +75,16 @@ class MovieList(QAbstractListModel):
 
     def __get_is_downloading(self):
         return self.__movie_list_worker.working
+    
+    def __get_download_current_value(self):
+        return self.__movie_list_worker.current_value
+    
+    def __get_download_max_value(self):
+        return self.__movie_list_worker.max_value
 
     is_downloading = Property(bool, __get_is_downloading, notify=download_progress_changed)
-
+    download_current_value = Property(int, __get_download_current_value, notify=download_progress_changed)
+    download_max_value = Property(int, __get_download_max_value, notify=download_progress_changed)
 
 # Threading
 class WorkerSignals(QObject):
@@ -92,17 +99,22 @@ class MovieListWorker(QRunnable):
         self.signals = WorkerSignals()
         self.__movies = tmdb.Movies()
         self.working = False
+        self.current_value = 0
+        self.max_value = 0
 
     def run(self):
+        self.current_value = 0
         self.working = True
         self.__fetch()
         self.working = False
 
     def __fetch(self):
         popular_movies = self.__movies.popular(page=1).get("results")
+        self.max_value = len(popular_movies)
         
         for i in popular_movies:
-            time.sleep(0.3)
+            # time.sleep(0.3)
+            self.current_value += 1
             title = i.get("title")
             release_date = i.get("release_date")
             vote_average = int(round(i.get("vote_average") * 10))
