@@ -42,25 +42,6 @@ class MovieList(QAbstractListModel):
         self.endInsertRows()
 
         self.download_progress_changed.emit()
-
-    def fetch_movies_old(self):
-        print("Start fetching movies")
-        movies = tmdb.Movies()
-        popular_movies = movies.popular(page=1).get("results")
-
-        for i in popular_movies:
-            title = i.get("title")
-            print(f"Add movie: {title}")
-            release_date = i.get("release_date")
-            vote_average = int(round(i.get("vote_average") * 10))
-            poster_path = f"{POSTER_TOOT}{i.get('poster_path')}"
-
-            self.__movies.append({
-                "title": title,
-                "release_date": release_date,
-                "vote_average": vote_average,
-                "poster_path": poster_path
-            })
         
     def rowCount(self, parent=QModelIndex):
         return len(self.__movies)
