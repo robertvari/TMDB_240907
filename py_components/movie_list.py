@@ -31,7 +31,9 @@ class MovieList(QAbstractListModel):
         self.__job_pool.start(self.__movie_list_worker)
     
     def __insert_movie(self, movie_data):
-        print(f"Movie data: {movie_data}")
+        self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
+        self.__movies.append(movie_data)
+        self.endInsertRows()
 
     def fetch_movies_old(self):
         print("Start fetching movies")
