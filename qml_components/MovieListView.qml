@@ -5,7 +5,7 @@ Item{
     GridView{
         id: grid_view
         anchors.fill: parent
-        model: MovieList
+        model: MovieListProxy
         cellWidth: 184
         cellHeight: 386
         clip: true
@@ -14,7 +14,7 @@ Item{
             width: grid_view.cellWidth - 10
             height: grid_view.cellHeight - 10
             title: movie.title
-            release_date: movie.release_date
+            release_date: movie.display_date
             popularity: movie.vote_average
             poster: movie.poster_path
         }

@@ -26,6 +26,7 @@ Item{ // Sidebar
                     Layout.fillWidth: true
                     placeholderText: "Search..."
                     icon: Resources.get("search_icon.svg")
+                    onTextEdited: MovieListProxy.set_search(text)
                 }
 
                 SubtitleText{text: "Sorting"}
