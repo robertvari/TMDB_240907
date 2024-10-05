@@ -23,7 +23,7 @@ class MovieList(QAbstractListModel):
         self.__job_pool.setMaxThreadCount(1)
 
         # Create our worker
-        self.__movie_list_worker = MovieListWorker()
+        self.__movie_list_worker = MovieListWorker(max_pages=20)
         
         # Connect to its signals here
         self.__movie_list_worker.signals.task_finished.connect(self.__insert_movie)
@@ -94,37 +94,41 @@ class WorkerSignals(QObject):
         super().__init__()
 
 class MovieListWorker(QRunnable):
-    def __init__(self):
+    def __init__(self, max_pages):
         super().__init__()
         self.signals = WorkerSignals()
         self.__movies = tmdb.Movies()
         self.working = False
         self.current_value = 0
         self.max_value = 0
+        self.max_pages = max_pages
 
     def run(self):
         self.current_value = 0
+        self.max_value = 0
         self.working = True
         self.__fetch()
         self.working = False
 
     def __fetch(self):
-        popular_movies = self.__movies.popular(page=1).get("results")
-        self.max_value = len(popular_movies)
+        for page in range(1, self.max_pages + 1):
+            popular_movies = self.__movies.popular(page=page).get("results")
+
+            if self.max_value == 0:
+                self.max_value = len(popular_movies) * self.max_pages
         
-        for i in popular_movies:
-            # time.sleep(0.3)
-            self.current_value += 1
-            title = i.get("title")
-            release_date = i.get("release_date")
-            vote_average = int(round(i.get("vote_average") * 10))
-            poster_path = f"{POSTER_TOOT}{i.get('poster_path')}"
+            for i in popular_movies:
+                self.current_value += 1
+                title = i.get("title")
+                release_date = i.get("release_date")
+                vote_average = int(round(i.get("vote_average") * 10))
+                poster_path = f"{POSTER_TOOT}{i.get('poster_path')}"
 
-            movie_data = {
-                "title": title,
-                "release_date": release_date,
-                "vote_average": vote_average,
-                "poster_path": poster_path
-            }
+                movie_data = {
+                    "title": title,
+                    "release_date": release_date,
+                    "vote_average": vote_average,
+                    "poster_path": poster_path
+                }
 
-            self.signals.task_finished.emit(movie_data)
+                self.signals.task_finished.emit(movie_data)
