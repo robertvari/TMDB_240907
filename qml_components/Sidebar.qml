@@ -53,7 +53,7 @@ Item{ // Sidebar
                 TitleText{text: "Genres"}
 
                 Repeater{
-                    model: ["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy"]
+                    model: MovieList.genres
 
                     TextButton{text: modelData; color: "black"; font.bold: false; font.pixelSize: 16}
                 }

@@ -62,6 +62,9 @@ class MovieList(QAbstractListModel):
     
     def __get_download_max_value(self):
         return self.__movie_list_worker.max_value
+    
+    def __get_genres(self):
+        return self.__movie_list_worker.genres
 
     @property
     def movies(self):
@@ -70,6 +73,7 @@ class MovieList(QAbstractListModel):
     is_downloading = Property(bool, __get_is_downloading, notify=download_progress_changed)
     download_current_value = Property(int, __get_download_current_value, notify=download_progress_changed)
     download_max_value = Property(int, __get_download_max_value, notify=download_progress_changed)
+    genres = Property(list, __get_genres, constant=True)
 
 class MovieListProxy(QSortFilterProxyModel):
     def __init__(self):
@@ -115,6 +119,10 @@ class MovieListWorker(QRunnable):
         self.working = True
         self.__fetch()
         self.working = False
+
+    @property
+    def genres(self):
+        return list(self.__movie_genres.values())
 
     def __get_genres(self, genre_id_list):
         if not genre_id_list:
