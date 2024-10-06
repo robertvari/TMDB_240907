@@ -76,12 +76,15 @@ class MovieList(QAbstractListModel):
     genres = Property(list, __get_genres, constant=True)
 
 class MovieListProxy(QSortFilterProxyModel):
+    sorting_changed = Signal()
+
     def __init__(self):
         super().__init__()
         self.sort(0, Qt.AscendingOrder)
 
         self.__title_filter = ""
         self.__genre_filter = ""
+        self.__current_sorting = ""
 
         self.__sorting_options = [
             "Rating Descending",
@@ -104,7 +107,16 @@ class MovieListProxy(QSortFilterProxyModel):
     def __get_sorting_options(self):
         return self.__sorting_options
     
+    def __get_current_sorting(self):
+        return self.__current_sorting
+
+    def __set_current_sorting(self, new_sorting):
+        self.__current_sorting = new_sorting
+        self.sorting_changed.emit()
+        self.invalidate()
+
     sorting_options = Property(list, __get_sorting_options, constant=True)
+    current_sorting = Property(str, __get_current_sorting, __set_current_sorting, notify=sorting_changed)
 
 # Threading
 class WorkerSignals(QObject):

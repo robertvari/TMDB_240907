@@ -34,6 +34,7 @@ Item{ // Sidebar
                 ComboBox{
                     Layout.fillWidth: true
                     model: MovieListProxy.sorting_options
+                    onActivated: MovieListProxy.current_sorting = currentText
                 }
             }
 
