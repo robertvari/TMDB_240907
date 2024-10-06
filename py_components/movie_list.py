@@ -23,7 +23,7 @@ class MovieList(QAbstractListModel):
         self.__job_pool.setMaxThreadCount(1)
 
         # Create our worker
-        self.__movie_list_worker = MovieListWorker(max_pages=1)
+        self.__movie_list_worker = MovieListWorker(max_pages=20)
         
         # Connect to its signals here
         self.__movie_list_worker.signals.task_finished.connect(self.__insert_movie)
@@ -77,13 +77,14 @@ class MovieList(QAbstractListModel):
 
 class MovieListProxy(QSortFilterProxyModel):
     sorting_changed = Signal()
+    genre_changed = Signal()
 
     def __init__(self):
         super().__init__()
         self.sort(0, Qt.AscendingOrder)
 
         self.__title_filter = ""
-        self.__genre_filter = ""
+        self.__current_genre = ""
         self.__current_sorting = "Rating Descending"
 
         self.__sorting_options = [
@@ -102,7 +103,11 @@ class MovieListProxy(QSortFilterProxyModel):
     
     def filterAcceptsRow(self, source_row, source_parent):
         movie_data = self.sourceModel().movies[source_row]
-        return self.__title_filter.lower() in movie_data["title"].lower()
+
+        if self.__current_genre:
+            return self.__title_filter.lower() in movie_data["title"].lower() and self.__current_genre in movie_data["genres"]
+        else:
+            return self.__title_filter.lower() in movie_data["title"].lower()
     
     def lessThan(self, source_left, source_right):
         left_movie = self.sourceModel().data(source_left, Qt.UserRole)
@@ -132,8 +137,22 @@ class MovieListProxy(QSortFilterProxyModel):
         self.sorting_changed.emit()
         self.invalidate()
 
+    def __get_current_genre(self):
+        return self.__current_genre
+    
+    def __set_current_genre(self, new_genre):
+        # self.current_genre = "" if self.__current_genre == new_genre else new_genre
+
+        if new_genre == self.__current_genre:
+            self.current_genre = ""
+        else:
+            self.__current_genre = new_genre
+        self.genre_changed.emit()
+        self.invalidateFilter()
+
     sorting_options = Property(list, __get_sorting_options, constant=True)
     current_sorting = Property(str, __get_current_sorting, __set_current_sorting, notify=sorting_changed)
+    current_genre = Property(str, __get_current_genre, __set_current_genre, notify=genre_changed)
 
 # Threading
 class WorkerSignals(QObject):
