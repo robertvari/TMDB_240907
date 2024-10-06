@@ -23,7 +23,7 @@ class MovieList(QAbstractListModel):
         self.__job_pool.setMaxThreadCount(1)
 
         # Create our worker
-        self.__movie_list_worker = MovieListWorker(max_pages=20)
+        self.__movie_list_worker = MovieListWorker(max_pages=1)
         
         # Connect to its signals here
         self.__movie_list_worker.signals.task_finished.connect(self.__insert_movie)
@@ -84,7 +84,7 @@ class MovieListProxy(QSortFilterProxyModel):
 
         self.__title_filter = ""
         self.__genre_filter = ""
-        self.__current_sorting = ""
+        self.__current_sorting = "Rating Descending"
 
         self.__sorting_options = [
             "Rating Descending",
@@ -104,6 +104,23 @@ class MovieListProxy(QSortFilterProxyModel):
         movie_data = self.sourceModel().movies[source_row]
         return self.__title_filter.lower() in movie_data["title"].lower()
     
+    def lessThan(self, source_left, source_right):
+        left_movie = self.sourceModel().data(source_left, Qt.UserRole)
+        right_movie = self.sourceModel().data(source_right, Qt.UserRole)
+
+        if self.__current_sorting == self.__sorting_options[0]:
+            return left_movie["vote_average"] > right_movie["vote_average"]
+        elif self.__current_sorting == self.__sorting_options[1]:
+            return left_movie["vote_average"] < right_movie["vote_average"]
+        elif self.__current_sorting == self.__sorting_options[2]:
+            return left_movie["sort_date"] > right_movie["sort_date"]
+        elif self.__current_sorting == self.__sorting_options[3]:
+            return left_movie["sort_date"] < right_movie["sort_date"]
+        elif self.__current_sorting == self.__sorting_options[4]:
+            return left_movie["title"] < right_movie["title"]
+        elif self.__current_sorting == self.__sorting_options[5]:
+            return left_movie["title"] > right_movie["title"]
+
     def __get_sorting_options(self):
         return self.__sorting_options
     
