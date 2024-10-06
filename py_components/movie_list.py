@@ -101,7 +101,10 @@ class MovieListProxy(QSortFilterProxyModel):
         movie_data = self.sourceModel().movies[source_row]
         return self.__title_filter.lower() in movie_data["title"].lower()
     
+    def __get_sorting_options(self):
+        return self.__sorting_options
     
+    sorting_options = Property(list, __get_sorting_options, constant=True)
 
 # Threading
 class WorkerSignals(QObject):

@@ -33,7 +33,7 @@ Item{ // Sidebar
 
                 ComboBox{
                     Layout.fillWidth: true
-                    model: ["Popularity Descending", "Popularity Ascending", "Rating Descending", "Rating Ascending", "Release Date Descending", "Release Date Ascending", "Title (A-Z)", "Title (Z-A)"]
+                    model: MovieListProxy.sorting_options
                 }
             }
 
