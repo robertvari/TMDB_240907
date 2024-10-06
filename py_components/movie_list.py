@@ -83,6 +83,15 @@ class MovieListProxy(QSortFilterProxyModel):
         self.__title_filter = ""
         self.__genre_filter = ""
 
+        self.__sorting_options = [
+            "Rating Descending",
+            "Rating Ascending",
+            "Release Date Descending",
+            "Release Date Ascending",
+            "Title (A-Z)",
+            "Title (Z-A)"
+        ]
+
     @Slot(str)
     def set_search(self, search_string):
         self.__title_filter = search_string
@@ -91,6 +100,8 @@ class MovieListProxy(QSortFilterProxyModel):
     def filterAcceptsRow(self, source_row, source_parent):
         movie_data = self.sourceModel().movies[source_row]
         return self.__title_filter.lower() in movie_data["title"].lower()
+    
+    
 
 # Threading
 class WorkerSignals(QObject):
