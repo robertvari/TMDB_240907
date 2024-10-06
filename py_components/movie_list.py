@@ -23,7 +23,7 @@ class MovieList(QAbstractListModel):
         self.__job_pool.setMaxThreadCount(1)
 
         # Create our worker
-        self.__movie_list_worker = MovieListWorker(max_pages=20)
+        self.__movie_list_worker = MovieListWorker(max_pages=1)
         
         # Connect to its signals here
         self.__movie_list_worker.signals.task_finished.connect(self.__insert_movie)
@@ -207,6 +207,7 @@ class MovieListWorker(QRunnable):
                 poster_path = f"{POSTER_TOOT}{i.get('poster_path')}"
 
                 movie_data = {
+                    "id": i.get("id"),
                     "title": title,
                     "display_date": release_date.strftime("%Y %B %d"),
                     "sort_date": release_date,

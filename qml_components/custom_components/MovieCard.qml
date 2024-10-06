@@ -10,6 +10,7 @@ Item{
     property string release_date: "Date"
     property int popularity: 100
     property var poster: Resources.get("poster.webp")
+    property int movie_id
 
     RoundedBox{
         id: source_rect
@@ -70,6 +71,9 @@ Item{
         anchors.fill: parent
 
         cursorShape: Qt.PointingHandCursor
-        onClicked: main_layout.state = "movie-details"
+        onClicked: {
+            // main_layout.state = "movie-details"
+            print(root.movie_id)
+        }
     }
 }
