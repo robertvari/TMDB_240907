@@ -8,7 +8,7 @@ from datetime import datetime
 tmdb.API_KEY = "83cbec0139273280b9a3f8ebc9e35ca9"
 tmdb.REQUESTS_TIMEOUT = 5
 
-POSTER_TOOT = "https://image.tmdb.org/t/p/w300"
+POSTER_ROOT = "https://image.tmdb.org/t/p/w300"
 
 class MovieList(QAbstractListModel):
     DataRole = Qt.UserRole
@@ -204,7 +204,7 @@ class MovieListWorker(QRunnable):
                 title = i.get("title")
                 release_date = datetime.strptime(i.get("release_date"), "%Y-%m-%d")
                 vote_average = int(round(i.get("vote_average") * 10))
-                poster_path = f"{POSTER_TOOT}{i.get('poster_path')}"
+                poster_path = f"{POSTER_ROOT}{i.get('poster_path')}"
 
                 movie_data = {
                     "id": i.get("id"),

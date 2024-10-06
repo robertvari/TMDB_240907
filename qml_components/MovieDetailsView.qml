@@ -15,7 +15,7 @@ Item{
         }
 
         Image{ // Backdrop
-            source: Resources.get("backdrop.webp")
+            source: MovieDetails.backdrop
             width: parent.width
             height: parent.height
             fillMode: Image.PreserveAspectCrop
@@ -30,7 +30,7 @@ Item{
                 implicitWidth: 450
                 Image{
                     anchors.fill: parent
-                    source: Resources.get("poster.webp")
+                    source: MovieDetails.poster
                     fillMode: Image.PreserveAspectFit
                 }
             }
@@ -39,27 +39,27 @@ Item{
                 Layout.fillWidth: true
 
                 TitleText{
-                    text: "Deadpool & Wolverine (2024)"
+                    text: MovieDetails.title
                     color: "white"
                     font.pixelSize: 35
                 }
 
                 Text{
-                    text: "07/25/2024 Action, Comedy, Science Fiction 2h 8m"
+                    text: MovieDetails.date_genres_runtime
                     color: "white"
                     font.pixelSize: 16
                 }
 
                 PopularityProgress{
-                    popularity: 85
+                    popularity: MovieDetails.popularity
                     implicitWidth: 80
                     implicitHeight: 80
                 }
 
                 SubtitleText{
-                    text: "Come together."
+                    text: MovieDetails.tagline
                     color: "white"
-                    font.pixelSize: 16
+                    font.pixelSize: 20
                 }
 
                 Text{
@@ -71,13 +71,12 @@ Item{
 
                 Text{
                     Layout.fillWidth: true
-                    text: "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat, Wade must reluctantly suit-up again with an even more reluctant Wolverine."
+                    text: MovieDetails.overview
                     color: "white"
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     font.pixelSize: 16
                 }
             }
         }
-
     }
 }
