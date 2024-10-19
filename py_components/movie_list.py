@@ -4,6 +4,7 @@ from PySide6.QtCore import (QAbstractListModel, QModelIndex,
                             )
 import tmdbsimple as tmdb
 from datetime import datetime
+import time
 
 tmdb.API_KEY = "83cbec0139273280b9a3f8ebc9e35ca9"
 tmdb.REQUESTS_TIMEOUT = 5
@@ -42,7 +43,10 @@ class MovieList(QAbstractListModel):
         self.endInsertRows()
 
         self.download_progress_changed.emit()
-        
+
+    def stop_worker(self):
+        self.__movie_list_worker.stop()
+
     def rowCount(self, parent=QModelIndex):
         return len(self.__movies)
 
@@ -181,6 +185,9 @@ class MovieListWorker(QRunnable):
         self.working = True
         self.__fetch()
         self.working = False
+    
+    def stop(self):
+        self.working = False
 
     @property
     def genres(self):
@@ -194,14 +201,20 @@ class MovieListWorker(QRunnable):
 
     def __fetch(self):
         for page in range(1, self.max_pages + 1):
+            if not self.working:
+                break
+
             popular_movies = self.__movies.popular(page=page).get("results")
 
             if self.max_value == 0:
                 self.max_value = len(popular_movies) * self.max_pages
         
             for i in popular_movies:
+                if not self.working:
+                    break
+
                 self.current_value += 1
-                title = i.get("title")
+                title = i.get("title")                
                 release_date = datetime.strptime(i.get("release_date"), "%Y-%m-%d")
                 vote_average = int(round(i.get("vote_average") * 10))
                 poster_path = f"{POSTER_ROOT}{i.get('poster_path')}"

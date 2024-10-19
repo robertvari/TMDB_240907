@@ -40,8 +40,14 @@ class TMDB:
         # Check if qml has root objects
         if not self.engine.rootObjects():
             sys.exit(-1)
+
+        # Check if window closed and close all other processes.
+        self.app.lastWindowClosed.connect(self.__app_closing)
         
         sys.exit(self.app.exec())
+    
+    def __app_closing(self):
+        self.movie_list.stop_worker()
 
 if __name__ == '__main__':
     TMDB()
